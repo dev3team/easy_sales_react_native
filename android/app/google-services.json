@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "545953624513",
+    "firebase_url": "https://test-3709a-default-rtdb.firebaseio.com",
+    "project_id": "test-3709a",
+    "storage_bucket": "test-3709a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545953624513:android:a8a6ca4a82d788fe7e7f40",
+        "android_client_info": {
+          "package_name": "com.easysales"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545953624513-0tgrcev7k353g0r0l45cr8t2ejs2s06l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0Ek0WsBe8fD0XptYqO0jkBjcCkW7Gyh4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545953624513-0tgrcev7k353g0r0l45cr8t2ejs2s06l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "545953624513-4agnvn9g94bqg6or79qrbs9566ll0fhd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "upwork.ios"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
