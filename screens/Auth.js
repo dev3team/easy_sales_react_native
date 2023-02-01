@@ -6,7 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-// import {getStorageValue, setStorageValue} from '../utills/localStorage';
+
+import {getStorageValue, setStorageValue} from '../utills/localStorage';
 import settings from '../config/default';
 
 let theme;

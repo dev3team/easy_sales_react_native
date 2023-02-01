@@ -8,17 +8,18 @@ import {
 } from 'react-native';
 
 import settings from '../config/default';
-// import  {setStorageValue, getStorageValue} from '../utills/localStorage';
+import messaging from '@react-native-firebase/messaging';
+import  {setStorageValue, getStorageValue} from '../utills/localStorage';
 
 let theme;
 
-// const setTheme = async () => {
-//     const setSaveTheme = await getStorageValue('theme');
-//     theme = setSaveTheme !== null ? setSaveTheme : 'dark';
-//     console.log(theme);
-// };
+const setTheme = async () => {
+    const setSaveTheme = await getStorageValue('theme');
+    theme = setSaveTheme !== null ? setSaveTheme : 'dark';
+    console.log(theme);
+};
 
-// setTheme();
+setTheme();
 
 export default function Register({navigation}){
 
@@ -26,19 +27,24 @@ export default function Register({navigation}){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const getToken = async () => {
+      const token = await messaging().getToken();
+      console.log(token)
+      return token;
+    };
     
 
     const buttonClickHandler = async () => {
-        if (email !== '' && password !== '') {
-        //   const res = await register(email, password, username, await getToken());
-          if (res.hasOwnProperty('error') && res.error) {
-            return false;
-          }
-          // setStorageValue('auth', true);
-        //   navigation.navigate('Home');
-        } else {
-          throw {message: 'fields not full'};
-        }
+        // if (email !== '' && password !== '') {
+        // //   const res = await register(email, password, username, await getToken());
+        //   if (res.hasOwnProperty('error') && res.error) {
+        //     return false;
+        //   }
+        //   // setStorageValue('auth', true);
+        // //   navigation.navigate('Home');
+        // } else {
+        //   throw {message: 'fields not full'};
+        // }
       };
     
     return (
