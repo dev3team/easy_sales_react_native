@@ -9,6 +9,7 @@ import {
 
 import settings from '../config/default';
 import messaging from '@react-native-firebase/messaging';
+import {register} from '../utills/firebase';
 import  {setStorageValue, getStorageValue} from '../utills/localStorage';
 
 let theme;
@@ -33,18 +34,19 @@ export default function Register({navigation}){
       return token;
     };
     
+	console.log(getToken())
 
     const buttonClickHandler = async () => {
-        // if (email !== '' && password !== '') {
-        // //   const res = await register(email, password, username, await getToken());
-        //   if (res.hasOwnProperty('error') && res.error) {
-        //     return false;
-        //   }
-        //   // setStorageValue('auth', true);
-        // //   navigation.navigate('Home');
-        // } else {
-        //   throw {message: 'fields not full'};
-        // }
+        if (email !== '' && password !== '') {
+          const res = await register(email, password, username);
+          if (res.hasOwnProperty('error') && res.error) {
+            return false;
+          }
+          setStorageValue('auth', true);
+          navigation.navigate('Home');
+        } else {
+          throw {message: 'fields not full'};
+        }
       };
     
     return (

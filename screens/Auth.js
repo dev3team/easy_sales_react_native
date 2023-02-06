@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import {login} from '../utills/firebase';
 import {getStorageValue, setStorageValue} from '../utills/localStorage';
 import settings from '../config/default';
 
@@ -24,6 +25,30 @@ export default function Auth({navigation}){
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const buttonClickHandler = async () => {
+        if (email !== '' && password !== '') {
+          const res = await login(email, password);
+          console.log(res)
+          if (res.hasOwnProperty('error') && res.error) {
+            return false;
+          }
+          await setStorageValue('auth', true);
+          navigation.navigate('Home');
+        } else {
+          throw {message: 'fields not full'};
+        }
+      };
+
+      useEffect(() => {
+        (async function myFunc(){
+            const isAccess = await getStorageValue('auth');
+
+            if(isAccess){
+                navigation.navigate('Home');
+            }
+        })()
+      }, [])
 
     return (
         <View style={[
@@ -91,8 +116,7 @@ export default function Auth({navigation}){
                         : settings.app.theme.light.buttonBgColor,
                     },
                 ]}
-                // onPress={buttonClickHandler}
-                >
+                onPress={buttonClickHandler}>
                 <Text style={[
                     styles.loginText,
                     {
