@@ -9,9 +9,11 @@ import {
   Button,
 } from 'react-native';
 
-import {out} from '../../utills/firebase';
-import {setStorageValue, getStorageValue} from '../../utills/localStorage';
+import {out} from '../../utils/firebase';
+import {setStorageValue, getStorageValue} from '../../utils/localStorage';
 import settings from '../../config/default';
+import { useDispatch } from 'react-redux';
+import {resetState} from '../../store'
 
 let theme;
 
@@ -23,8 +25,11 @@ const setTheme = async () => {
 setTheme();
 
 export default function Settings({navigation}) {
-  const buttonClickHandler = () => {
+  const dispatch = useDispatch()
+  
+  const buttonClickHandler = async() => {
     out();
+    dispatch(resetState())
     navigation.navigate('Auth');
   };
 

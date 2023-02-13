@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 
-// import {setStorageValue, removeStorageValue} from '../utills/localStorage';
-// import {setUserToken} from './axios';
+import {setStorageValue, removeStorageValue} from '../utils/localStorage';
+import {setUserToken} from './axios';
 
 // const firebaseConfig = {
 //     apiKey: "AIzaSyCv8KZlHAqfGDEfUqMADU0SYrzB9rXXD5o",
@@ -31,12 +31,12 @@ import auth from '@react-native-firebase/auth';
 // }
 // console.log(1)
 
-export const login = async (email, password) => {
+export const login = async (email, password, token) => {
     try {
       const user = await auth().signInWithEmailAndPassword(email, password);
-    //   console.log('Username: ', user.user.displayName); // show user params in firebase
-    //   const {user: userInfo} = user;
-    //   setUserToken(userInfo.uid, userInfo.email, token);
+      // console.log('Username: ', user); // show user params in firebase
+      const {user: {uid, email: e}} = user;
+      setUserToken(uid, e, token);
       return {message: 'Login', error: false};
     } catch (error) {
       console.log('error login', error);
@@ -51,12 +51,10 @@ export const register = async (email, password, username, token) => {
         //   profile.updateProfile({
         //     displayName: username,
         //   });
-        console.log('register', user);
-        //   const {
-        //     user: {uid, email: mail},
-        //   } = user;
-
-        //   setUserToken(uid, mail, token);
+        // const {user: {uid, email: e}} = user;
+        // console.log('register', user);
+        const {user: {uid, email: e}} = user;
+        setUserToken(uid, e, token);
         await setStorageValue('auth', true);
         return {message: 'User create!'};
         } catch (error) {

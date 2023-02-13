@@ -1,35 +1,49 @@
 import React, {useState, useEffect} from 'react';
 import {
+    AppState,
   StyleSheet,
   Text,
   View,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-
-import {login} from '../utills/firebase';
-import {getStorageValue, setStorageValue} from '../utills/localStorage';
+import { useSelector, useDispatch } from 'react-redux';
+import {login} from '../utils/firebase';
+import PushNotification from 'react-native-push-notification';
+import messaging from '@react-native-firebase/messaging';
+import {getStorageValue, setStorageValue} from '../utils/localStorage';
+import { setAppStatus } from '../store';
 import settings from '../config/default';
-
 let theme;
 
-// const setTheme = async () => {
-//     const setSaveTheme = await getStorageValue('theme');
-//     theme = setSaveTheme !== null ? setSaveTheme : 'dark';
-//     console.log(theme);
-// };
-  
-// setTheme();
+
 
 export default function Auth({navigation}){
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+    const appStatus = useSelector(state => state.parsedJobs.appStatus)
+    
+    PushNotification.configure({
+        onNotification: (notification) => {
+            console.log(notification)
+            if(appStatus !== 'active') navigation.navigate('Details', {id: notification.data.jobId})
+        }
+    })
+    
+
+    messaging().setBackgroundMessageHandler(async (m) => console.log('got notification'));
+
+    const getToken = async () => {
+      const token = await messaging().getToken();
+      return token;
+    };
 
     const buttonClickHandler = async () => {
         if (email !== '' && password !== '') {
-          const res = await login(email, password);
-          console.log(res)
+          const res = await login(email, password, await getToken());
+          // console.log(res)
           if (res.hasOwnProperty('error') && res.error) {
             return false;
           }
@@ -40,15 +54,24 @@ export default function Auth({navigation}){
         }
       };
 
-      useEffect(() => {
-        (async function myFunc(){
-            const isAccess = await getStorageValue('auth');
+    useEffect(() => {
+        const subscription = AppState.addEventListener('change', nextAppState => {
+            console.log(nextAppState)
+            dispatch(setAppStatus(nextAppState))
+        });
 
+        (async () => {
+            const isAccess = await getStorageValue('auth');
             if(isAccess){
                 navigation.navigate('Home');
             }
         })()
-      }, [])
+
+        return () => {
+            subscription.remove();
+          };
+
+    }, [])
 
     return (
         <View style={[

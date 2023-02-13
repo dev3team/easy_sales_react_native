@@ -1,38 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {ScrollView, Text, FlatList, VirtualizedList, List, ListItem} from 'react-native';
-
-
+import React, {useEffect, useState, useRef} from 'react';
+import { FlatList } from "react-native-bidirectional-infinite-scroll";
 import Post from '../Post';
 
-const PostsList = ({fetchMoreData, jobsList, isLoading, isListEnd}) => {
-	
-	const renderFooter = () => (
-        <View>
-            {isLoading && <ActivityIndicator />}
-            {isListEnd && <Text>No more jobs at the moment</Text>}
-        </View>
-    )
-
-	const getItemCount = (data) => {
-		return data.length
-	}
-
-	const getItem = (data, index) => {
-		return data[index]
-	}
+const PostsList = ({fetchMoreData, jobsList, navigation, flatlist}) => {
 
 	return (
-		<VirtualizedList
-			initialNumToRender={3}
-			refreshing={true}
-			contentContainerStyle={{flexGrow: 1}}
+			<FlatList
+			ref={flatlist}
 			data = {jobsList}
 			renderItem={({item})=> (
-				<Post post={item}/>
+				<Post post={item} navigation={navigation}/>
 			)}
-			getItemCount={getItemCount}
-			getItem={getItem}
-			// renderFooter={renderFooter}
 			keyExtractor={item => item.id}
 			onEndReachedThreshold={0.2}
 			onEndReached={fetchMoreData}

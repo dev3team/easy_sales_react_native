@@ -13,7 +13,7 @@ export const setStorageValue = async (key, value) => {
   export const getStorageValue = async (key) => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
+      return JSON.parse(jsonValue)
     } catch (e) {
       console.log('Get store error: ', e);  
     }

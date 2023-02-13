@@ -9,8 +9,8 @@ import {
 
 import settings from '../config/default';
 import messaging from '@react-native-firebase/messaging';
-import {register} from '../utills/firebase';
-import  {setStorageValue, getStorageValue} from '../utills/localStorage';
+import {register} from '../utils/firebase';
+import  {setStorageValue, getStorageValue} from '../utils/localStorage';
 
 let theme;
 
@@ -30,19 +30,17 @@ export default function Register({navigation}){
 
     const getToken = async () => {
       const token = await messaging().getToken();
-      console.log(token)
       return token;
     };
-    
-	console.log(getToken())
 
+    
     const buttonClickHandler = async () => {
         if (email !== '' && password !== '') {
-          const res = await register(email, password, username);
-          if (res.hasOwnProperty('error') && res.error) {
-            return false;
-          }
-          setStorageValue('auth', true);
+          const res = await register(email, password, username, await getToken());
+          // if (res.hasOwnProperty('error') && res.error) {
+          //   return false;
+          // }
+          await setStorageValue('auth', true);
           navigation.navigate('Home');
         } else {
           throw {message: 'fields not full'};

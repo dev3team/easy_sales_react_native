@@ -6,28 +6,33 @@ export const fetchJobs = createAsyncThunk(
     'parsedJobs/fetchJobs',
     async (length, {rejectWithValue, dispatch}) => {
         console.log(length, 'length')
+        ///172.20.10.3
+        //192.168.0.103
         try {
             const response = await axios.get(`http://192.168.0.103:3306/parsed-jobs?skip=${length}`);
 
             const {data: {jobs: newJobs, isListEnd}} = response;
             
             dispatch(addJobs({newJobs, isListEnd}))
-
-            return response
-            
         } catch (error) {
             return rejectWithValue(error.message)
         }
     }
 )
 
+const initialState = {
+    jobs: [],
+    newJobs: [],
+    appStatus: 'active',
+    isListEnd: false,
+    isLoading: false,
+
+}
+
+
 const parsedJobs = createSlice({
     name: 'parsedJobs',
-    initialState: {
-        jobs: [],
-        isListEnd: false,
-        isLoading: false
-    },
+    initialState,
     reducers: {
         addJobs : (state, action) => {
             const {newJobs: jobs, isListEnd} = action.payload
@@ -35,11 +40,24 @@ const parsedJobs = createSlice({
             state.isListEnd = isListEnd
         }, 
         addNewJobs: (state, action) => {
-            // console.log(action.payload.data)
-            console.log(action.payload.data.length)
-            const jobs = action.payload.data
-            state.jobs.unshift(...jobs)
+            if(state.jobs.length != 0){
+                const jobs = action.payload.data
+                state.newJobs.unshift(...jobs)
+            }
+        },
+        showNewJobs: (state, action) => {
+            const slicedJobs = state.newJobs.splice(-10);
+            state.jobs.unshift(...slicedJobs);
+        },
+        resetState: (state, action) => {
+            state.jobs = []
+            state.isListEnd = false
+            state.newJobs = []
+        },
+        setAppStatus: (state, action) => {
+            state.appStatus = action.payload
         }
+
     },
     extraReducers: (builder) => {
         builder.addCase(fetchJobs.pending, (state, action) => {
@@ -52,7 +70,7 @@ const parsedJobs = createSlice({
       
 })
 
-export const { addJobs, addNewJobs } = parsedJobs.actions
+export const { addJobs, addNewJobs, resetState, setAppStatus, showNewJobs } = parsedJobs.actions
 
 export const store = configureStore({
     reducer: {

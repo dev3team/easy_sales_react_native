@@ -1,28 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {StyleSheet, View, TextInput, Button, Text} from 'react-native';
-import {getJobs} from '../../utills/axios';
 import PostsList from '../PostsList';
-
 import { useSelector, useDispatch } from 'react-redux';
-import { addJobs, fetchJobs } from '../../store';
-// import {getJobs} from '../../utills/axios';
-
-import {getStorageValue} from '../../utills/localStorage';
+import {getStorageValue} from '../../utils/localStorage';
 import settings from '../../config/default';
-import { io } from "socket.io-client";
-import { store } from '../../store';
-import { addNewJobs } from '../../store';
-
-export const socket = io("ws://192.168.0.103:3306");
-
-socket.on('connect', () => {
-   socket.emit('create new user', 'add me')
-})
-
-socket.on('new jobs', (data) => {
-  store.dispatch(addNewJobs({data}))
-})
-
+import { showNewJobs, fetchJobs } from '../../store';
 
 let theme;
 
@@ -34,25 +16,38 @@ const setTheme = async () => {
 setTheme();
 
 export default function Main({navigation}) {
-	const {jobs, isListEnd, isLoading} = useSelector((state) => state.parsedJobs);
-	
-	const [page, setPage] = useState(1);
-	const dispatch = useDispatch();
+	const {jobs, isListEnd, isLoading, newJobs} = useSelector((state) => state.parsedJobs);
+ 	const dispatch = useDispatch();
+	const flatlist = useRef(null) 
 
-	const sendRequestAPI = () => {
-		dispatch(fetchJobs(jobs.length))
+	const sendRequestAPI = async () => {
+		await dispatch(fetchJobs(jobs.length + newJobs.length))
 	};
 
-	const fetchMoreData = () => {
+	const scrollToOffset = () => {
+		flatlist.current.scrollToOffset({ animated: false, offset: 0})
+	}
+
+	const showJobs = () => {
+		scrollToOffset()
+		dispatch(showNewJobs())
+	}
+
+	const fetchMoreData = async() => {
 		if(!isListEnd && !isLoading){
-			setPage(page + 1)
+		console.log('fetch')
+		sendRequestAPI()
 		}
 	}
 
 	useEffect(() => {
+		console.log('mount')
 		sendRequestAPI()
-		console.log("CURRENT PAGE", page)
-	}, [page])
+
+		return () => {
+			console.log('unmount')
+		}
+	}, [])
 
   return (
     <View>
@@ -62,17 +57,10 @@ export default function Main({navigation}) {
           {backgroundColor: settings.app.theme[theme].backgroundColor},
         ]}>
         <View>
-          {/* <TextInput
-            style={[
-              styles.input,
-              {borderColor: settings.app.theme[theme].borderColor},
-            ]}
-            onChangeText={changeText}
-            value={search}
-          /> */}
-          {/* <Button title="Search" onPress={sendRequest} /> */}
+			<Text>{newJobs.length} new jobs</Text>
+          	{newJobs.length != 0 &&<Button title="show new" onPress={showJobs}/>}
         </View>
-        <PostsList fetchMoreData={fetchMoreData} jobsList={jobs} isLoading={isLoading} isListEnd={isListEnd}/>
+        <PostsList fetchMoreData={fetchMoreData} flatlist={flatlist} jobsList={jobs} isLoading={isLoading} isListEnd={isListEnd} navigation={navigation}/>
       </View>
     </View>
   );

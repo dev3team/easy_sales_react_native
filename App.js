@@ -24,7 +24,19 @@
  import Auth from './screens/Auth';
  import Register from './screens/Register';
  import Home from './screens/Home';
- import { store } from './store';
+ import Details from './screens/Details';
+ import { store, addNewJobs } from './store';
+ import { io } from "socket.io-client";
+export const socket = io("ws://192.168.0.103:3306");
+
+socket.on('connect', () => {
+   socket.emit('create new user', 'add me')
+})
+
+socket.on('new jobs', (data) => {
+  console.log('got new jobs', data.length)
+  store.dispatch(addNewJobs({data}))
+})
  
  const Stack = createNativeStackNavigator();
  
@@ -39,6 +51,7 @@ function App(){
 				<Stack.Screen name="Auth" component={Auth} />
 				<Stack.Screen name="Register" component={Register} />	
 				<Stack.Screen name="Home" component={Home} />
+				<Stack.Screen name="Details" component={Details}/>
 			</Stack.Navigator>
 			</NavigationContainer>
 		</Provider>

@@ -2259,6 +2259,11 @@
   "resolved" "https://registry.npmjs.org/@socket.io/component-emitter/-/component-emitter-3.1.0.tgz"
   "version" "3.1.0"
 
+"@stream-io/flat-list-mvcp@^0.10.2":
+  "integrity" "sha512-jebEKP7pfRF8/tVSqNM6qdvisfOtMnMlzGYTWldoOnIq9/6DS1BU4ilzBuH6O7iBUu4bDokrMCNJgA2b2EKW/A=="
+  "resolved" "https://registry.npmjs.org/@stream-io/flat-list-mvcp/-/flat-list-mvcp-0.10.2.tgz"
+  "version" "0.10.2"
+
 "@tsconfig/react-native@^2.0.2":
   "integrity" "sha512-jE58snEKBd9DXfyR4+ssZmYJ/W2mOSnNrvljR0aLyQJL9JKX6vlWELHkRjb3HBbcM9Uy0hZGijXbqEAjOERW2A=="
   "resolved" "https://registry.npmjs.org/@tsconfig/react-native/-/react-native-2.0.3.tgz"
@@ -6730,6 +6735,11 @@
   "integrity" "sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w=="
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
+
+"react-native-bidirectional-infinite-scroll@^0.3.3":
+  "integrity" "sha512-zxYJDjrxTkGqg83WH3fSdufg79XZ7xDDn9HdHlKo9avAcz92Rf28/ivDeUM2aOUmmboqJK8BqtVByT6cF/taYg=="
+  "resolved" "https://registry.npmjs.org/react-native-bidirectional-infinite-scroll/-/react-native-bidirectional-infinite-scroll-0.3.3.tgz"
+  "version" "0.3.3"
 
 "react-native-codegen@^0.71.3":
   "integrity" "sha512-5AvdHVU1sAaXg05i0dG664ZTaCaIFaY1znV5vNsj+wUu6MGxNEUNbDKk9dxKUkkxOyk2KZOK5uhzWL0p5H5yZQ=="

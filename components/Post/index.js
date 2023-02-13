@@ -11,7 +11,7 @@ const dateFormat = (date) => {
 	return new Date(date).toISOString().split('.')[0];
 }
 
-const Post = ({post: {
+const Post = ({navigation, post: {
   id,
   average_rating, 
   reviews,
@@ -27,37 +27,31 @@ const Post = ({post: {
   fixed_price,
   parsing_completion_time
 }}) => {
-  // const [isOpen, setIsOpen] = useState(false);
-  // const showSkills = () => {
-  //   if (skills.length > 0) setIsOpen(!isOpen);
-  // };
 
-  
-  return (
-    <View style={styles.container}>
-      {/* <TouchableOpacity>
-        <Text style={styles.header} onPress={() => Linking.openURL(url)}>
-          {title}
-        </Text>
-      </TouchableOpacity> */}
-      <Text style={styles.item}>ID: {id}</Text>
-      <Text style={styles.item}>Country: {country}</Text>
-      <Text style={styles.item}>City: {city}</Text>
-      <Text style={styles.item}>Average rating: {average_rating}</Text>
-      <Text style={styles.item}>Reviews: {reviews}</Text>
-      <Text style={styles.item}>Hire rate: {hire_rate}</Text>
-      <Text style={styles.item}>Open job(s): {open_job}</Text>
-      <Text style={styles.item}>Client_hires: {client_hires}</Text>
-      <Text style={styles.item}>Active: {active}</Text>
-      <Text style={styles.item}>Client total spent: {client_total_spent}</Text>
-      <Text style={styles.item}>avg_hourly_rate_paid: {avg_hourly_rate_paid}</Text>
-      <Text style={styles.item}>hourly_rate: {hourly_rate}</Text>
-      <Text style={styles.item}>fixed_price: {fixed_price}</Text>
-      <Text style={styles.textField}>
-        parsing_completion_time: {dateFormat(parsing_completion_time)}
-      </Text>
-      
-    </View>
+return (
+	<View  style={styles.container}>
+		<Text style={styles.item}>ID: {id}</Text>
+		<Text style={styles.item}>Country: {country}</Text>
+		<Text style={styles.item}>City: {city}</Text>
+		<Text style={styles.item}>Average rating: {average_rating}</Text>
+		<Text style={styles.item}>Reviews: {reviews}</Text>
+		<Text style={styles.item}>Hire rate: {hire_rate}</Text>
+		<Text style={styles.item}>Open job(s): {open_job}</Text>
+		<Text style={styles.item}>Client_hires: {client_hires}</Text>
+		<Text style={styles.item}>Active: {active}</Text>
+		<Text style={styles.item}>Client total spent: {client_total_spent}</Text>
+		<Text style={styles.item}>avg_hourly_rate_paid: {avg_hourly_rate_paid}</Text>
+		<Text style={styles.item}>hourly_rate: {hourly_rate}</Text>
+		<Text style={styles.item}>fixed_price: {fixed_price}</Text>
+		<Text style={styles.textField}>
+		parsing_completion_time: {dateFormat(parsing_completion_time)}
+		</Text>
+		<TouchableOpacity>
+		<Text style={styles.header} onPress={() => navigation.navigate('Details', {id})}>
+			Show Details
+		</Text>
+		</TouchableOpacity>
+	</View>
   );
 };
 
