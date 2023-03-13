@@ -2,17 +2,19 @@ import { configureStore, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios';
 import thunk from 'redux-thunk';
 
+import { bidSlice } from './bidSlice';
+import {URL} from '../utils/axios';
+
+
 export const fetchJobs = createAsyncThunk(
     'parsedJobs/fetchJobs',
     async (length, {rejectWithValue, dispatch}) => {
-        console.log(length, 'length')
         ///172.20.10.3
         //192.168.0.103
         try {
-            const response = await axios.get(`http://192.168.0.103:3306/parsed-jobs?skip=${length}`);
+            const response = await axios.get(`${URL}/parsed-jobs?skip=${length}`);
 
             const {data: {jobs: newJobs, isListEnd}} = response;
-            
             dispatch(addJobs({newJobs, isListEnd}))
         } catch (error) {
             return rejectWithValue(error.message)
@@ -23,14 +25,14 @@ export const fetchJobs = createAsyncThunk(
 const initialState = {
     jobs: [],
     newJobs: [],
+    bidDetails: null,
     appStatus: 'active',
     isListEnd: false,
     isLoading: false,
-
 }
 
 
-const parsedJobs = createSlice({
+const parsedJobsSlice = createSlice({
     name: 'parsedJobs',
     initialState,
     reducers: {
@@ -56,8 +58,8 @@ const parsedJobs = createSlice({
         },
         setAppStatus: (state, action) => {
             state.appStatus = action.payload
-        }
-
+        },
+        
     },
     extraReducers: (builder) => {
         builder.addCase(fetchJobs.pending, (state, action) => {
@@ -70,11 +72,12 @@ const parsedJobs = createSlice({
       
 })
 
-export const { addJobs, addNewJobs, resetState, setAppStatus, showNewJobs } = parsedJobs.actions
+export const { addJobs, addNewJobs, resetState, setAppStatus, showNewJobs } = parsedJobsSlice.actions
 
 export const store = configureStore({
     reducer: {
-        parsedJobs: parsedJobs.reducer
+        parsedJobs: parsedJobsSlice.reducer,
+        bid: bidSlice.reducer
     },
     middleware: [thunk]
 })

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, Linking, TouchableOpacity} from 'react-native';
 import {StyleSheet} from 'react-native';
+import { Button } from '../Button';
 
 // const dateFormat = (date) => {
 //   const time = date.split('T');
@@ -27,32 +28,29 @@ const Post = ({navigation, post: {
   fixed_price,
   parsing_completion_time
 }}) => {
-
-return (
-	<View  style={styles.container}>
-		<Text style={styles.item}>ID: {id}</Text>
-		<Text style={styles.item}>Country: {country}</Text>
-		<Text style={styles.item}>City: {city}</Text>
-		<Text style={styles.item}>Average rating: {average_rating}</Text>
-		<Text style={styles.item}>Reviews: {reviews}</Text>
-		<Text style={styles.item}>Hire rate: {hire_rate}</Text>
-		<Text style={styles.item}>Open job(s): {open_job}</Text>
-		<Text style={styles.item}>Client_hires: {client_hires}</Text>
-		<Text style={styles.item}>Active: {active}</Text>
-		<Text style={styles.item}>Client total spent: {client_total_spent}</Text>
-		<Text style={styles.item}>avg_hourly_rate_paid: {avg_hourly_rate_paid}</Text>
-		<Text style={styles.item}>hourly_rate: {hourly_rate}</Text>
-		<Text style={styles.item}>fixed_price: {fixed_price}</Text>
-		<Text style={styles.textField}>
-		parsing_completion_time: {dateFormat(parsing_completion_time)}
-		</Text>
-		<TouchableOpacity>
-		<Text style={styles.header} onPress={() => navigation.navigate('Details', {id})}>
-			Show Details
-		</Text>
-		</TouchableOpacity>
-	</View>
-  );
+    return (
+        <View  style={styles.container}>
+            <Text style={styles.item}>ID: {id}</Text>
+            <Text style={styles.item}>Country: {country}</Text>
+            <Text style={styles.item}>City: {city}</Text>
+            <Text style={styles.item}>Average rating: {average_rating}</Text>
+            <Text style={styles.item}>Reviews: {reviews}</Text>
+            <Text style={styles.item}>Hire rate: {hire_rate}</Text>
+            <Text style={styles.item}>Open job(s): {open_job}</Text>
+            <Text style={styles.item}>Client_hires: {client_hires}</Text>
+            <Text style={styles.item}>Active: {active}</Text>
+            <Text style={styles.item}>Client total spent: {client_total_spent}</Text>
+            <Text style={styles.item}>avg_hourly_rate_paid: {avg_hourly_rate_paid}</Text>
+            <Text style={styles.item}>hourly_rate: {hourly_rate}</Text>
+            <Text style={styles.item}>fixed_price: {fixed_price}</Text>
+            <Text style={styles.textField}>
+            parsing_completion_time: {dateFormat(parsing_completion_time)}
+            </Text>
+            <TouchableOpacity>
+                <Button title='Details' onPress={() => navigation.navigate('Details', {id})}/>
+            </TouchableOpacity>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
@@ -64,6 +62,7 @@ const styles = StyleSheet.create({
   },
   container: {
     borderWidth: 3,
+    borderRadius: 10,
     borderColor: '#2a8002',
     marginBottom: 20,
     padding: 10,

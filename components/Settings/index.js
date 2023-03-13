@@ -6,12 +6,12 @@ import {
   View,
   Text,
   Switch,
-  Button,
 } from 'react-native';
 
 import {out} from '../../utils/firebase';
 import {setStorageValue, getStorageValue} from '../../utils/localStorage';
 import settings from '../../config/default';
+import { Button } from '../Button';
 import { useDispatch } from 'react-redux';
 import {resetState} from '../../store'
 
@@ -79,6 +79,9 @@ const styles = StyleSheet.create({
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   highlight: {
     fontWeight: '700',

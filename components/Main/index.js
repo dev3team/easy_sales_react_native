@@ -57,26 +57,31 @@ export default function Main({navigation}) {
           {backgroundColor: settings.app.theme[theme].backgroundColor},
         ]}>
         <View>
-			<Text>{newJobs.length} new jobs</Text>
+			<Text style={styles.counter}>{newJobs.length} new jobs</Text>
           	{newJobs.length != 0 &&<Button title="show new" onPress={showJobs}/>}
         </View>
-        <PostsList fetchMoreData={fetchMoreData} flatlist={flatlist} jobsList={jobs} isLoading={isLoading} isListEnd={isListEnd} navigation={navigation}/>
+        <PostsList fetchMoreData={fetchMoreData} flatlist={flatlist} jobsList={jobs} navigation={navigation}/>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  input: {
-    height: 60,
-    padding: 14,
-    borderWidth: 3,
-  },
-  container: {
-    paddingTop: 20,
-    paddingLeft: 20,
-    paddingRight: 20,
-    width: '100%',
-    height: '100%',
-  },
+	input: {
+		height: 60,
+		padding: 14,
+		borderWidth: 3,
+	},
+	container: {
+		paddingTop: 20,
+		paddingLeft: 20,
+		paddingRight: 20,
+		width: '100%',
+		height: '100%',
+	},
+	counter: {
+		fontSize: 18,
+		fontWeight: 700,
+		marginLeft: 20
+	}
 });

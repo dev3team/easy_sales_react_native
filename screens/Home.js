@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+//  
 import {
   StyleSheet,
   Text,
@@ -18,22 +19,22 @@ const Tab = createBottomTabNavigator();
 export default function Home() {
     return (
       <Tab.Navigator
-        headerShown={false}
-        initialRouteName="Home"
-        shifting={true}
-        activeColor="#7b7b7b"
-        inactiveColor="#FFFFFF"
-        barStyle={{backgroundColor: 'red'}}
-        screenOptions={{
-          headerShown: false,
-          tabBarOptions: {
-            style: {
-              backgroundColor: 'red',
+          headerShown={false}
+          initialRouteName="Home"
+          shifting={true}
+          activeColor="#7b7b7b"
+          inactiveColor="#FFFFFF"
+          barStyle={{backgroundColor: 'red'}}
+          screenOptions={{
+            headerShown: false,
+            tabBarOptions: {
+              style: {
+                backgroundColor: 'red',
+              },
             },
-          },
-        }}>
-        <Tab.Screen name="Main" component={Main} />
-        <Tab.Screen name="Settings" component={Settings} />
+          }}>
+          <Tab.Screen name="Main" component={Main}/>
+          <Tab.Screen name="Settings" component={Settings}/>
       </Tab.Navigator>
     );
   }

@@ -11,7 +11,7 @@ const PostsList = ({fetchMoreData, jobsList, navigation, flatlist}) => {
 			renderItem={({item})=> (
 				<Post post={item} navigation={navigation}/>
 			)}
-			keyExtractor={item => item.id}
+			keyExtractor={item => item?.id}
 			onEndReachedThreshold={0.2}
 			onEndReached={fetchMoreData}
 		/>

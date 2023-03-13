@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, ScrollView, View, TextInput, Button, Text} from 'react-native';
+import {StyleSheet, ScrollView, View, TextInput, Text} from 'react-native';
 import { getJob } from '../utils/axios';
+import  {socket}  from '../App';
+import { Preloader } from '../components/Preloader';
+import { Button } from '../components/Button';
 
 export default function Details({route, navigation}) {
     const [job, setJob] = useState(null)
-    
     const { id } = route.params;
 
     const fetchJob = async () => {
@@ -17,10 +19,14 @@ export default function Details({route, navigation}) {
         fetchJob()
     }, [id])
 
+    const apply = () => {
+        socket.emit('apply job', {url: job.url, jobType: job.job_type}); 
+        navigation.navigate('Proposal', {url: job.url});
+    }
 
     return (
-    <ScrollView>
-        <Text>Details</Text>
+    job ? <ScrollView>
+        <Text style={style.header}>Details</Text>
         {job && 
             <View style={style.container}>
                 {job.title && <Text style={style.item}>Title: {job.title}</Text>}
@@ -40,20 +46,43 @@ export default function Details({route, navigation}) {
                 {job.open_job && <Text style={style.item}>Open job: {job.open_job}</Text>}
                 {job.client_hires && <Text style={style.item}>Client hires: {job.client_hires}</Text>}
             </View>}
-        <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+            <View style={style.buttonGroup}>
+                <Button title="Apply now" onPress={apply}/>
+                <Button title="Go Home" onPress={() => navigation.navigate('Home')} />
+            </View>
+            
     </ScrollView>
+    : 
+    <Preloader/>
     );
 }
 
 const style = StyleSheet.create({
     container: {
         borderWidth: 3,
+        borderRadius: 10,
         borderColor: '#2a8002',
-        // marginBottom: 20,
+        margin: 10,
         padding: 10,
+    },
+    header: {
+        marginTop: 10,
+        fontSize: 18,
+        fontWeight: 700,
+        marginLeft: 10,
     },
     item: {
         marginRight: 20,
         // marginBottom: 4,
     },
+    button: {
+        width: 40
+    },
+    buttonGroup: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginBottom: 20,
+        marginTop: 20,
+    }
 })

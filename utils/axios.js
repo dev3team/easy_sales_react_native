@@ -1,4 +1,5 @@
 import axios from 'axios';
+export const URL = 'http://192.168.1.103:3306'
 
 // export const getJobs = async (title = '') => {
 //   const queryStr = title !== '' ? `?title=${title}` : '';
@@ -20,7 +21,7 @@ export const setUserToken = (userId, email, token) => {
 	};
 	axios({
 	  method: 'post',
-	  url: 'http://192.168.0.103:3306/auth',
+	  url: `${URL}/auth`,
 	  data: JSON.stringify(data),
 	  headers: {'Content-Type': 'application/json', Accept: '*/*'},
 	})
@@ -30,8 +31,7 @@ export const setUserToken = (userId, email, token) => {
 
 
 export const getJob = async (jobId) => {
-	console.log(jobId)
-	let url = `http://192.168.0.103:3306/jobsprofile/${jobId}`
+	let url = `${URL}/jobsprofile/${jobId}`;
 	const res = await axios.get(url);
 	return res
 }
