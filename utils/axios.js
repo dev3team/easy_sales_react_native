@@ -1,5 +1,5 @@
 import axios from 'axios';
-export const URL = 'http://192.168.1.103:3306'
+export const URL = 'https://api-upwork.dev-3.com/'
 
 // export const getJobs = async (title = '') => {
 //   const queryStr = title !== '' ? `?title=${title}` : '';

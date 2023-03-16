@@ -31,7 +31,7 @@
  import { setBidDetails, setResult } from './store/bidSlice';
  import { io } from "socket.io-client";
 export const api = '192.168.1.103:3306'
-export const socket = io(`ws://192.168.1.103:3306`);
+export const socket = io(`wss://api-upwork.dev-3.com/`);
 
 socket.on('connect', () => {
    socket.emit('create new user', 'add me')
