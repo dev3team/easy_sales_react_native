@@ -7,14 +7,15 @@ import { FixedJobTerms } from '../FixedJobTerms';
 
 
 
-export const Terms = ({type}) => {
+export const Terms = ({terms}) => {
+    const {jobType, milestone} = terms;
 
     return (
         <View style={styles.container}>
             <View >
                 <Text style={styles.header}>Terms</Text>
             </View>
-            {type == "Fixed" ? <FixedJobTerms/> : <HourlyJobTerms/>}
+            {jobType == "Fixed" ? <FixedJobTerms milestone={milestone}/> : <HourlyJobTerms/>}
         </View>
         
     )

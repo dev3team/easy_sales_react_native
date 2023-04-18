@@ -1,5 +1,5 @@
 import axios from 'axios';
-export const URL = 'https://api-upwork.dev-3.com/'
+export const URL = `http://192.168.0.107:3434`;
 
 // export const getJobs = async (title = '') => {
 //   const queryStr = title !== '' ? `?title=${title}` : '';
@@ -23,15 +23,19 @@ export const setUserToken = (userId, email, token) => {
 	  method: 'post',
 	  url: `${URL}/auth`,
 	  data: JSON.stringify(data),
-	  headers: {'Content-Type': 'application/json', Accept: '*/*'},
+	  headers: {'Content-Type': 'application/json', Accept: '*/*', 'Access-Key': '13579'},
 	})
 	  .then((res) => console.log('log user token', res))
 	  .catch((e) => console.log('error user token', e));
   };
 
 
-export const getJob = async (jobId) => {
-	let url = `${URL}/jobsprofile/${jobId}`;
-	const res = await axios.get(url);
+export const getJob = async (id) => {
+	let url = `${URL}/jobsprofile/${id}`;
+	const res = await axios({
+		method: 'get',
+		url,
+		headers: {'Access-Key': '13579'}
+	});
 	return res
 }

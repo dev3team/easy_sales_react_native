@@ -10,6 +10,7 @@ import {
 import Main from '../components/Main';
 // import Related from '../components/Related';
 import Settings from '../components/Settings';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -26,6 +27,7 @@ export default function Home() {
           inactiveColor="#FFFFFF"
           barStyle={{backgroundColor: 'red'}}
           screenOptions={{
+            tabBarShowLabel: false,
             headerShown: false,
             tabBarOptions: {
               style: {
@@ -33,8 +35,24 @@ export default function Home() {
               },
             },
           }}>
-          <Tab.Screen name="Main" component={Main}/>
-          <Tab.Screen name="Settings" component={Settings}/>
+          <Tab.Screen
+            name="Main" 
+            component={Main}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="apps" color={color} size={size} />
+              )
+            }}
+          />
+          <Tab.Screen 
+            name="Settings" 
+            component={Settings}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="cog" color={color} size={size} />
+              )
+            }}
+          />
       </Tab.Navigator>
     );
   }

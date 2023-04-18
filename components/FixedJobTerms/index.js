@@ -7,10 +7,9 @@ import { PaymentByProject } from '../PaymentTypes/PaymentByProject';
 import { setType, setTermsValue, setIsActive } from '../../store/bidSlice';
 
 
-export const FixedJobTerms = () => {
+export const FixedJobTerms = ({milestone}) => {
     const dispatch = useDispatch();
     const data = useSelector(state => state.bid.bidDetailsForInput.terms.data);
-    
 
     const options = [{
         label: 'By milestone',
@@ -21,7 +20,7 @@ export const FixedJobTerms = () => {
         value: 'byproject'
     }]
 
-    const [chosenOption, setChosenOption] = useState('milestone');
+    const [chosenOption, setChosenOption] = useState(milestone ? 'milestone' : 'byproject');
     useEffect(() => {
         dispatch(setType('fixed'));
         dispatch(setTermsValue([{type: 'milestone', active: true, value: []},{ type: 'byproject', active: false, value: ''}]))
@@ -32,6 +31,7 @@ export const FixedJobTerms = () => {
     }, [chosenOption])
 
     return (
+        milestone ? 
         <View>
             <Text>How do you want to be paid?</Text>
             <RadioForm
@@ -43,6 +43,7 @@ export const FixedJobTerms = () => {
             />
             {data && data[0]?.active ? <PaymentByMilestone/> : <PaymentByProject/>}
         </View>
+        : <PaymentByProject/>
     )
 }
 

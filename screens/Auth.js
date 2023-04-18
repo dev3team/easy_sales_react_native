@@ -16,7 +16,12 @@ import { setAppStatus } from '../store';
 import settings from '../config/default';
 let theme;
 
-
+const setTheme = async () => {
+    const setSaveTheme = await getStorageValue('theme');
+    theme = setSaveTheme !== null ? 'light' : 'light';
+};
+  
+setTheme();
 
 export default function Auth({navigation}){
 
@@ -27,7 +32,6 @@ export default function Auth({navigation}){
     
     PushNotification.configure({
         onNotification: (notification) => {
-            console.log(notification)
             if(appStatus !== 'active') navigation.navigate('Details', {id: notification.data.jobId})
         }
     })
@@ -56,7 +60,6 @@ export default function Auth({navigation}){
 
     useEffect(() => {
         const subscription = AppState.addEventListener('change', nextAppState => {
-            console.log(nextAppState)
             dispatch(setAppStatus(nextAppState))
         });
 

@@ -15,7 +15,7 @@ export const Questions = ({questions}) => {
         <View style={styles.container}> 
             <Text style={styles.header}>Questions</Text>
             <View>
-                {questions.map((item, index) => <Question key={index} index={index} question={item} value={answers?.[index]}/>
+                {questions?.map((item, index) => <Question key={index} index={index} question={item} value={answers?.[index]}/>
             )}
             </View>
         </View>

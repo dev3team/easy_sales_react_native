@@ -7,6 +7,7 @@ import { CoverLetter } from '../components/CoverLetter';
 import { Questions } from '../components/Questions';
 import { JobStatus } from '../components/JobStatus';
 import { Team } from '../components/Team';
+import { Connects } from '../components/Connects';
 import { Bids } from '../components/Bids';
 import { Button } from '../components/Button';
 import { Preloader } from '../components/Preloader';
@@ -32,22 +33,22 @@ export default function Proposal({route, navigation}){
     return (
        <ScrollView>
             { bidDetails ? 
-            bidDetails.status ? 
-                <JobStatus status={bidDetails.status} navigation={navigation}/>
+                bidDetails.status ? 
+                    <JobStatus status={bidDetails.status} navigation={navigation}/>
                 : 
-                <View>
-                    <Team/>
-                    <Terms type={bidDetails.jobType}/>
-                    {bidDetails.isDurationQ && <Duration/>}
-                    <CoverLetter/>
-                    {bidDetails.jobQuestions?.length != 0 && <Questions questions={bidDetails.jobQuestions}/>}
-                    {bidDetails.bids && <Bids bids={bidDetails.bids}/>}
-                    <View style={styles.buttonGroup}>
-                        <Button title='Send' onPress={setBid}/>
-                        <Button title='Go back' onPress={goBack}></Button>
-                    </View>
-                    
-                </View> 
+                    <View>
+                        <Team/>
+                        <Terms terms={bidDetails.terms}/>
+                        {bidDetails.isDurationQ && <Duration/>}
+                        <CoverLetter/>
+                        {bidDetails.jobQuestions?.length != 0 && <Questions questions={bidDetails.jobQuestions}/>}
+                        {bidDetails.bids && <Bids bids={bidDetails.bids}/>}
+                        <Connects connects={bidDetails.connects}/>
+                        <View style={styles.buttonGroup}>
+                            <Button title='Send' disabled={+bidDetails.connects.requiredConnects > +bidDetails.connects.availableConnects} onPress={setBid} />
+                            <Button title='Go back' onPress={goBack}></Button>
+                        </View>
+                    </View> 
             :
             <Preloader/>
             }

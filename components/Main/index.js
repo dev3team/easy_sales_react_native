@@ -10,6 +10,7 @@ let theme;
 
 const setTheme = async () => {
   const setSaveTheme = await getStorageValue('theme');
+  
   theme = setSaveTheme !== null ? setSaveTheme : 'light';
 };
 
@@ -35,13 +36,11 @@ export default function Main({navigation}) {
 
 	const fetchMoreData = async() => {
 		if(!isListEnd && !isLoading){
-		console.log('fetch')
 		sendRequestAPI()
 		}
 	}
 
 	useEffect(() => {
-		console.log('mount')
 		sendRequestAPI()
 
 		return () => {

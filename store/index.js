@@ -12,7 +12,12 @@ export const fetchJobs = createAsyncThunk(
         ///172.20.10.3
         //192.168.0.103
         try {
-            const response = await axios.get(`${URL}/parsed-jobs?skip=${length}`);
+            const url = `${URL}/parsed-jobs?skip=${length}`;
+            const response = await axios({
+                method: 'get',
+                url,
+                headers: {'Access-Key': '13579'}
+            });
 
             const {data: {jobs: newJobs, isListEnd}} = response;
             dispatch(addJobs({newJobs, isListEnd}))
